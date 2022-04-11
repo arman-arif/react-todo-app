@@ -24,6 +24,17 @@ function App() {
     }
   ]);
 
+  function addTaskHandler(taskValue) {
+    setTodos(todos => [
+        {
+            id: todos.length + 1,
+            title: taskValue,
+            done: false
+        },
+        ...todos
+    ]);
+  }
+
     return (
         <Container fluid className="p-0 bg-light vh-100">
             <Navbar bg="dark" expand="lg" className="justify-content-center">
@@ -34,9 +45,9 @@ function App() {
             <Container className="p-3">
                 <Row className="justify-content-center">
                     <Col md={10} lg={8}>
-                        <Composer/>
+                        <Composer onAddTask={addTaskHandler}/>
                         <Row>
-                          {todos.sort((a, b) => a.done > b.done ? 1 : -1).map(todo => <Todo task={todo} key={todo.id}/>) }
+                          {todos.sort((a, b) => a.done === b.done ? 1 : a.done > b.done ? 1 : -1).map(todo => <Todo task={todo} key={todo.id}/>) }
                         </Row>
                     </Col>
                 </Row>
