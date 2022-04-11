@@ -1,43 +1,41 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Container, Navbar, Row, Col } from "react-bootstrap";
 import Composer from "./components/Composer";
+import AppLayout from "./components/layouts/AppLayout";
+import TodoContainer from "./components/layouts/TodoContainer";
 import Todo from "./components/Todo";
 import todoData from "./store";
 
 function App() {
+    const [todos, setTodos] = useState(todoData);
 
-  const [todos, setTodos] = useState(todoData);
+    const sortedTodos = sortTodos(todos);
 
-  function addTaskHandler(taskValue) {
-    setTodos(todos => [
-        {
-            id: todos.length + 1,
-            title: taskValue,
-            done: false
-        },
-        ...todos
-    ]);
-  }
+    function sortTodos(todos) {
+        //return todos.sort((a, b) => (a.done === b.done ? 1 : a.done > b.done ? 1 : -1));
+        return todos.sort((a, b) => (a.done === b.done) ? b.id - a.id : a.done ? 1 : -1);
+    }
+
+    function addTaskHandler(taskValue) {
+        setTodos((todos) => [
+            ...todos,
+            {
+                id: todos.length + 1,
+                title: taskValue,
+                done: false,
+            },
+        ]);
+    }
 
     return (
-        <Container fluid className="p-0 bg-light vh-100">
-            <Navbar bg="dark" expand="lg" className="justify-content-center">
-                <Navbar.Brand>
-                    <h1 className="text-white">Todos</h1>
-                </Navbar.Brand>
-            </Navbar>
-            <Container className="p-3">
-                <Row className="justify-content-center">
-                    <Col md={10} lg={8}>
-                        <Composer onAddTask={addTaskHandler}/>
-                        <Row>
-                          {todos.sort((a, b) => a.done === b.done ? 1 : a.done > b.done ? 1 : -1).map(todo => <Todo task={todo} key={todo.id}/>) }
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </Container>
+        <AppLayout>
+            <Composer onAddTask={addTaskHandler} />
+            <TodoContainer>
+                {sortedTodos.map((todo) => (
+                    <Todo task={todo} key={todo.id} />
+                ))}
+            </TodoContainer>
+        </AppLayout>
     );
 }
 
