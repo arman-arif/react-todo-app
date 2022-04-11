@@ -3,26 +3,11 @@ import { useState } from "react";
 import { Container, Navbar, Row, Col } from "react-bootstrap";
 import Composer from "./components/Composer";
 import Todo from "./components/Todo";
+import todoData from "./store";
 
 function App() {
 
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: "Learn React",
-      done: false
-    },
-    {
-      id: 2,
-      title: "Learn Vue",
-      done: true
-    },
-    {
-      id: 3,
-      title: "Learn Angular",
-      done: false
-    }
-  ]);
+  const [todos, setTodos] = useState(todoData);
 
   function addTaskHandler(taskValue) {
     setTodos(todos => [
