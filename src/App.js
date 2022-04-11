@@ -4,9 +4,12 @@ import Composer from "./components/Composer";
 import AppLayout from "./components/layouts/AppLayout";
 import TodoContainer from "./components/layouts/TodoContainer";
 import Todo from "./components/Todo";
-import todoData from "./store";
+import todoData, { getTodos, saveTodos } from "./store";
 
 function App() {
+
+    console.log(getTodos());
+
     const [todos, setTodos] = useState(todoData);
 
     const sortedTodos = sortTodos(todos);
@@ -17,14 +20,13 @@ function App() {
     }
 
     function addTaskHandler(taskValue) {
-        setTodos((todos) => [
-            ...todos,
-            {
-                id: todos.length + 1,
-                title: taskValue,
-                done: false,
-            },
-        ]);
+        const newTodo = {
+            id: todos.length + 1,
+            title: taskValue,
+            done: false
+        };
+        setTodos([...todos, newTodo]);
+        saveTodos([...todos, newTodo]);
     }
 
     return (
