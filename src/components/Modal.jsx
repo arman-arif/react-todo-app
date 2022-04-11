@@ -9,6 +9,11 @@ function Modal(props) {
         props.onClose();
     }
 
+    function confirmHandler() {
+        setShow(false);
+        props.onConfirm(props.taskId);
+    }
+
     return (
         <BsModal show={show}>
             <BsModal.Body className="pt-3">
@@ -17,7 +22,7 @@ function Modal(props) {
                     <Button className="mx-3" variant="outline-secondary" onClick={closeHandler}>
                         Close
                     </Button>
-                    <Button className="mx-3" variant="danger" onClick={closeHandler}>
+                    <Button className="mx-3" variant="danger" onClick={confirmHandler}>
                         Confirm
                     </Button>
                 </div>

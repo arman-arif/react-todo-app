@@ -1,19 +1,7 @@
 const todoInit = [
-    {
-        id: 1,
-        title: "Learn React",
-        done: false
-        },
-        {
-        id: 2,
-        title: "Learn Vue",
-        done: true
-        },
-        {
-        id: 3,
-        title: "Learn Angular",
-        done: false
-        }
+    { id: 1, title: "Learn React", done: false},
+    { id: 2, title: "Learn Vue", done: true},
+    { id: 3, title: "Learn Angular", done: false}
 ];
 
 const todoData = [];

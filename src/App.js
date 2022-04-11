@@ -8,8 +8,6 @@ import todoData, { getTodos, saveTodos } from "./store";
 
 function App() {
 
-    console.log(getTodos());
-
     const [todos, setTodos] = useState(todoData);
 
     const sortedTodos = sortTodos(todos);
@@ -29,12 +27,29 @@ function App() {
         saveTodos([...todos, newTodo]);
     }
 
+    function doneHandler(task) {
+        const newTodos = todos.map(todo => {
+            if (todo.id === task.id) {
+                todo.done = !task.done;
+            }
+            return todo;
+        });
+        setTodos(newTodos);
+        saveTodos(newTodos);
+    }
+
+    function deleteHandler(taskId) {
+        const newTodos = todos.filter(todo => todo.id !== taskId);
+        setTodos(newTodos);
+        saveTodos(newTodos);
+    }
+
     return (
         <AppLayout>
             <Composer onAddTask={addTaskHandler} />
             <TodoContainer>
                 {sortedTodos.map((todo) => (
-                    <Todo task={todo} key={todo.id} />
+                    <Todo task={todo} key={todo.id} onDone={doneHandler} onDelete={deleteHandler}/>
                 ))}
             </TodoContainer>
         </AppLayout>

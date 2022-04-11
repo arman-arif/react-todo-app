@@ -14,6 +14,10 @@ function Todo(props) {
         setShow(false);
     }
 
+    function doneHandler() {
+        props.onDone(task);
+    }
+
     return (
         <Col sm={6} lg={4}>
             <Card className={"mb-4 " + (task.done || "shadow")}>
@@ -21,14 +25,14 @@ function Todo(props) {
                     <Card.Title>{task.title}</Card.Title>
                 </Card.Body>
                 <Card.Footer className={"d-flex justify-content-between border-top-0 " + (task.done || "bg-white")}>
-                    <Button variant={task.done ? "secondary" : "success"} size="sm">
+                    <Button variant={task.done ? "secondary" : "success"} size="sm" onClick={doneHandler}>
                         {task.done ? "Undone" : "Done"}
                     </Button>
                     <Button variant="danger" size="sm" onClick={deleteHandler}>
                         Delete
                     </Button>
                 </Card.Footer>
-                {show && <Modal onClose={closeHandler} />}
+                {show && <Modal taskId={task.id} onClose={closeHandler} onConfirm={props.onDelete} />}
             </Card>
         </Col>
     );
